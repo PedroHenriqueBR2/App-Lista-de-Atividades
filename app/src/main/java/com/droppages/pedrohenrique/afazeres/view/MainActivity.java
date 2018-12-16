@@ -27,6 +27,7 @@ import io.objectbox.BoxStore;
 
 public class MainActivity extends AppCompatActivity {
     private Box<AtividadeDb> atividadeDbBox;
+    private ListView lstAtividadesPendentes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +37,9 @@ public class MainActivity extends AppCompatActivity {
         BoxStore boxStore = ((App) getApplication()).getBoxStore();
         atividadeDbBox = boxStore.boxFor(AtividadeDb.class);
 
-        inflateListView();
-    }
-
-    private void inflateListView(){
         // Inflate ListView
-        ListView lstAtividadesPendentes = findViewById(R.id.lst_atividades_pendentes);
-        ArrayAdapter adapter = new AdapterListAtividade(this, fillList());
-        lstAtividadesPendentes.setAdapter(adapter);
+        lstAtividadesPendentes = findViewById(R.id.lst_atividades_pendentes);
+        inflateListView();
         // Select item click
         lstAtividadesPendentes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -52,6 +48,11 @@ public class MainActivity extends AppCompatActivity {
                 showDetails(txtId.getText().toString());
             }
         });
+    }
+
+    private void inflateListView(){
+        ArrayAdapter adapter = new AdapterListAtividade(this, fillList());
+        lstAtividadesPendentes.setAdapter(adapter);
     }
 
     private void showDetails(String id){

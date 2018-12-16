@@ -1,5 +1,7 @@
 package com.droppages.pedrohenrique.afazeres.view;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.droppages.pedrohenrique.afazeres.R;
 import com.droppages.pedrohenrique.afazeres.controller.AdapterListAtividade;
@@ -36,20 +39,36 @@ public class History extends AppCompatActivity {
         ArrayAdapter adapter = new AdapterListAtividade(this, fillList());
         lista.setAdapter(adapter);
 
-        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lista.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 TextView txtId = view.findViewById(R.id.txt_id);
-                delete(txtId.getText().toString());
+                verifyRequest(txtId.getText().toString());
+                return false;
             }
         });
 
     }
 
-    private void delete(String d){
-        Long id = Long.parseLong(d);
-        dbBox.remove(id);
-        finish();
+    private void verifyRequest(final String d){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setIcon(R.drawable.ic_alert);
+        builder.setTitle("Atenção");
+        builder.setMessage("Deletar registro selecionado?");
+        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Long id = Long.parseLong(d);
+                dbBox.remove(id);
+                finish();
+            }
+        });
+        builder.setNegativeButton("Não", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                showMessage("Cancelado");
+            }
+        });
     }
 
     private ArrayList<AtividadeListItem> fillList(){
@@ -64,5 +83,9 @@ public class History extends AppCompatActivity {
             }
         }
         return lista;
+    }
+
+    private void showMessage(String msg){
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 }
