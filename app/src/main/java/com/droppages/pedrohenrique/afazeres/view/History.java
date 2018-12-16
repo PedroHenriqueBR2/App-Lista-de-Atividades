@@ -26,6 +26,7 @@ import io.objectbox.BoxStore;
 public class History extends AppCompatActivity {
     private BoxStore boxStore;
     private Box<AtividadeDb> dbBox;
+    private ListView lista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +36,8 @@ public class History extends AppCompatActivity {
         boxStore = ((App)getApplication()).getBoxStore();
         dbBox    = boxStore.boxFor(AtividadeDb.class);
 
-        ListView lista = findViewById(R.id.lst_atividades_concluidas);
-        ArrayAdapter adapter = new AdapterListAtividade(this, fillList());
-        lista.setAdapter(adapter);
-
+        lista = findViewById(R.id.lst_atividades_concluidas);
+        inflateListView();
         lista.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -47,7 +46,11 @@ public class History extends AppCompatActivity {
                 return false;
             }
         });
+    }
 
+    private void inflateListView(){
+        ArrayAdapter adapter = new AdapterListAtividade(this, fillList());
+        lista.setAdapter(adapter);
     }
 
     private void verifyRequest(final String d){
@@ -60,7 +63,7 @@ public class History extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 Long id = Long.parseLong(d);
                 dbBox.remove(id);
-                finish();
+                inflateListView();
             }
         });
         builder.setNegativeButton("Não", new DialogInterface.OnClickListener(){
@@ -69,6 +72,7 @@ public class History extends AppCompatActivity {
                 showMessage("Cancelado");
             }
         });
+        builder.create().show();
     }
 
     private ArrayList<AtividadeListItem> fillList(){
