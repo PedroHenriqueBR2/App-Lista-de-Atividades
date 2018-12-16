@@ -1,0 +1,54 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:5323611027855925012",
+      "lastPropertyId": "7:7606503012999027982",
+      "name": "AtividadeDb",
+      "properties": [
+        {
+          "id": "1:7378754419250273504",
+          "name": "id"
+        },
+        {
+          "id": "2:8737168910884962839",
+          "name": "title"
+        },
+        {
+          "id": "3:1600457651626269856",
+          "name": "description"
+        },
+        {
+          "id": "4:8318025871195256191",
+          "name": "registerDate"
+        },
+        {
+          "id": "5:9207393392747348642",
+          "name": "deliveryDate"
+        },
+        {
+          "id": "6:6314922325382130051",
+          "name": "priority"
+        },
+        {
+          "id": "7:7606503012999027982",
+          "name": "done"
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "1:5323611027855925012",
+  "lastIndexId": "0:0",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 4,
+  "modelVersionParserMinimum": 4,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}
